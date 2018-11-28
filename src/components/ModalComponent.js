@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { addRow} from '../common/actions/appActions';
-import {mapDispatchToProps} from "./App";
+import { connect } from 'react-redux';
 
-export default class ModalComponent extends React.Component {
+
+class ModalComponent extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
@@ -14,7 +15,7 @@ export default class ModalComponent extends React.Component {
 		this.handleAgeChange = this.handleAgeChange.bind(this);
 		this.handleNicknameChange = this.handleNicknameChange.bind(this);
 		this.handleEmployeeChange = this.handleEmployeeChange.bind(this);
-		// this.handleSubmit = this.handleSubmit.bind(this);
+		this.setEmployee=this.setEmployee.bind(this);
 
 		this.state = {
 			show: false,
@@ -54,23 +55,29 @@ export default class ModalComponent extends React.Component {
 	}
 
 	setEmployee(){
-		let employee={
+		let newEmployee={
 			name:this.state.name,
 			job: this.state.jos,
 			age:this.state.age,
 			nickname:this.state.nickname,
 			isEmployee:this.state.isEmployee
 		};
-		// this.props.addEmployee(employee)
+		this.props.addPerson(newEmployee, event)
+		// let dipatched = dispatch => ({
+		// 	addRow: (this.newEmployee) => dispatch(addRow(this.newEmployee)),
+		//   });
+		//  store.dispatch('addRow', newEmployee)
+		
 	}
 
 	// Submit action
-	handleSubmit(event) {
-		alert('A name was submitted: ' + this.state.value);
-		event.preventDefault();
-	}
+	// handleSubmit(event) {
+	// 	alert('A name was submitted: ' + this.state.value);
+	// 	event.preventDefault();
+	// }
 
 	render() {
+	
 		return (
 			<div>
 				<Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
@@ -107,7 +114,9 @@ export default class ModalComponent extends React.Component {
 						<hr />
 					</Modal.Body>
 					<Modal.Footer>
-					<Button onClick={this.setEmployee()}>Add new</Button>
+					<Button onClick={() => this.props.dispatch(addRow({name:this.state.name, job:this.state.job, age:this.state.age, nick:this.state.nickname, isEmployee:this.state.isEmployee }))}>Add new</Button>
+					{/* <Button onClick={this.setEmployee()}>Add new</Button> */}
+					{/* <Button onClick={this.setEmployee()}>Add new</Button> */}
 						<Button onClick={this.handleClose}>Close</Button>
 					</Modal.Footer>
 				</Modal>
@@ -115,3 +124,12 @@ export default class ModalComponent extends React.Component {
 		);
 	}
 }
+
+function mapDispatchToProps(dispatch) {
+	return {
+	  onClick: () => dispatch(addRow(newPerson))
+	};
+  }
+
+export default connect(mapDispatchToProps)(ModalComponent);
+

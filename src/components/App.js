@@ -17,13 +17,14 @@ class App extends Component {
 	}
 	componentWillMount() {
 		this.getAll();
-		this.setState({ persons: this.props.persons.persons });
+		// this.setState({ persons: this.props.persons.persons });
 	}
 
 	render() {
 		return (
 			<div className="container">
 				<ModalComponent/>
+				{/* <ModalComponent addPerson={this.props.addPerson}/> */}
 				<div className="row">
 					<div className="col-sm-8 col-sm-offset-4">
 						<Table className="table" persons={this.props.persons.persons} />
@@ -39,7 +40,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	//TODO
-	// addPerson(newPerson) {
+	// addPerson: newPerson=> {
 	// 	dispatch(addRow(newPerson))
 	// },
 	getInitialList() {
