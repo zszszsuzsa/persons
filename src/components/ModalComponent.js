@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { addRow} from '../common/actions/appActions';
-import { connect } from 'react-redux';
+import './ModalComponent.scss';
 
 
-class ModalComponent extends React.Component {
+export default class ModalComponent extends Component {
 	constructor(props, context) {
 		super(props, context);
 
@@ -15,15 +14,18 @@ class ModalComponent extends React.Component {
 		this.handleAgeChange = this.handleAgeChange.bind(this);
 		this.handleNicknameChange = this.handleNicknameChange.bind(this);
 		this.handleEmployeeChange = this.handleEmployeeChange.bind(this);
-		this.setEmployee=this.setEmployee.bind(this);
+		this.setEmployee = this.setEmployee.bind(this);
 
 		this.state = {
+			newEmployee: {
+				name: "",
+				job: "",
+				age: "",
+				nickname: "",
+				isEmployee: false
+			},
+			initial: "",
 			show: false,
-			name: "",
-			job: "",
-			age: "",
-			nickname: "",
-			isEmployee: false
 		};
 	}
 
@@ -35,101 +37,89 @@ class ModalComponent extends React.Component {
 		this.setState({ show: true });
 	}
 
+	clearInput() {
+		this.setState({ name: "", job: "", age: "", nickname: "", isEmployee: false })
+	}
+
 	//Setting the state by input fieldvalue binding
 	handleNameChange(event) {
-		this.setState({ name: event.target.value });
+		this.setState({
+			newEmployee: Object.assign({}, this.state.newEmployee, { name: event.target.value })
+		});
 	}
 	handleJobChange(event) {
-		this.setState({ job: event.target.value });
+		this.setState({
+			newEmployee: Object.assign({}, this.state.newEmployee, { job: event.target.value })
+		});
 	}
 	handleAgeChange(event) {
-		this.setState({ age: event.target.value });
+		this.setState({
+			newEmployee: Object.assign({}, this.state.newEmployee, { age: event.target.value })
+		});
 	}
 	handleNicknameChange(event) {
-		this.setState({ nickname: event.target.value });
+		this.setState({
+			newEmployee: Object.assign({}, this.state.newEmployee, { nick: event.target.value })
+		});
 	}
 	handleEmployeeChange() {
-		this.setState(() => {
-			this.state.isEmployee = !this.state.isEmployee;
+		this.setState({
+			newEmployee: Object.assign({}, this.state.newEmployee, { isEmployee: !this.state.newEmployee.isEmployee })
 		});
 	}
 
-	setEmployee(){
-		let newEmployee={
-			name:this.state.name,
-			job: this.state.jos,
-			age:this.state.age,
-			nickname:this.state.nickname,
-			isEmployee:this.state.isEmployee
-		};
-		this.props.addPerson(newEmployee, event)
-		// let dipatched = dispatch => ({
-		// 	addRow: (this.newEmployee) => dispatch(addRow(this.newEmployee)),
-		//   });
-		//  store.dispatch('addRow', newEmployee)
-		
+	setEmployee() {
+		this.props.addPerson(this.state.newEmployee)
+		this.handleClose();
+		this.clearInput();
 	}
 
-	// Submit action
-	// handleSubmit(event) {
-	// 	alert('A name was submitted: ' + this.state.value);
-	// 	event.preventDefault();
-	// }
-
 	render() {
-	
 		return (
 			<div>
+				<div class="add">
 				<Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
 					Add
-			 </Button>
+					</Button>
+				</div>
 				<Modal show={this.state.show} onHide={this.handleClose}>
-					<Modal.Header closeButton>
+					<Modal.Header closeButton class="modal-header">
 						<Modal.Title>Modal heading</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<form>
-							<label>
+						<form class="well">
+							<label for="name">
 								Name:
-					<input type="text" value={this.state.name} onChange={e =>this.handleNameChange(e)} />
-							</label>
-							<label>
+								</label>
+							<input type="text" value={this.state.newEmployee.name} onChange={e => this.handleNameChange(e)} />
+
+							<label for="job">
 								Job title:
-					<input type="text" value={this.state.job} onChange={this.handleJobChange} />
-							</label>
-							<label>
+								</label>
+							<input type="text" value={this.state.newEmployee.job} onChange={this.handleJobChange} />
+
+							<label for="age">
 								Age:
-					<input type="text" value={this.state.age} onChange={this.handleAgeChange} />
-							</label>
-							<label>
+								</label>
+							<input type="text" value={this.state.newEmployee.age} onChange={this.handleAgeChange} />
+
+							<label for="nickname">
 								Nickname:
-					<input type="text" value={this.state.nickname} onChange={this.handleNicknameChange} />
-							</label>
-							<label>
+								</label>
+							<input type="text" value={this.state.newEmployee.nickname} onChange={this.handleNicknameChange} />
+
+							<label for="employee">
 								Employee:
-							<input type="checkbox" value={this.state.isEmployee} name="emmployee" onChange={this.handleEmployeeChange}></input>
-							</label>
-							<input type="submit" value="Submit" />
+								</label>
+							<input type="checkbox" value={this.state.newEmployee.isEmployee} name="emmployee" onChange={this.handleEmployeeChange}></input>
 						</form>
-						<hr />
 					</Modal.Body>
 					<Modal.Footer>
-					<Button onClick={() => this.props.dispatch(addRow({name:this.state.name, job:this.state.job, age:this.state.age, nick:this.state.nickname, isEmployee:this.state.isEmployee }))}>Add new</Button>
-					{/* <Button onClick={this.setEmployee()}>Add new</Button> */}
-					{/* <Button onClick={this.setEmployee()}>Add new</Button> */}
-						<Button onClick={this.handleClose}>Close</Button>
+						<Button onClick={this.setEmployee.bind(this)}>Add new</Button>
+						<Button onClick={this.handleClose} class="close">Close</Button>
 					</Modal.Footer>
 				</Modal>
 			</div>
 		);
 	}
 }
-
-function mapDispatchToProps(dispatch) {
-	return {
-	  onClick: () => dispatch(addRow(newPerson))
-	};
-  }
-
-export default connect(mapDispatchToProps)(ModalComponent);
-

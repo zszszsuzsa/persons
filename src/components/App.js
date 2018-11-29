@@ -3,6 +3,7 @@ import ModalComponent from './ModalComponent';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addRow, deleteRow, getInitialList } from '../common/actions/appActions';
+import './App.scss';
 
 
 class App extends Component {
@@ -17,17 +18,21 @@ class App extends Component {
 	}
 	componentWillMount() {
 		this.getAll();
-		// this.setState({ persons: this.props.persons.persons });
 	}
 
 	render() {
 		return (
-			<div className="container">
-				<ModalComponent/>
-				{/* <ModalComponent addPerson={this.props.addPerson}/> */}
+			<div className="container-fluid">
+				<ModalComponent addPerson={this.props.addPerson}/>
 				<div className="row">
-					<div className="col-sm-8 col-sm-offset-4">
+					<div className="col-sm-8 col-sm-offset-2 table-responsive">
 						<Table className="table" persons={this.props.persons.persons} />
+					</div>
+				</div>
+				<div className="row dump">
+					<div className="col-sm-8 col-sm-offset-2 table-responsive">
+					<div>Data dump</div>
+						<textarea className="dump-text" persons={this.props.persons.persons}></textarea>
 					</div>
 				</div>
 			</div>
@@ -39,10 +44,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	//TODO
-	// addPerson: newPerson=> {
-	// 	dispatch(addRow(newPerson))
-	// },
+	addPerson: newPerson=> {
+		dispatch(addRow(newPerson))
+	},
+	deletePerson: index=>{
+		//TODO
+	},
 	getInitialList() {
 		dispatch(getInitialList())
 	}

@@ -15,7 +15,8 @@ class TableItem extends Component {
                 </input>
             </td>
             <td>
-               <a href="#">Delete</a>
+                {<a href="#">Delete</a>}
+               {/* <a href="#" deleteItem={this.deleteItem.bind(this, key)} onClick={this.props.deleteItem}>Delete</a> */}
             </td>
           </tr>
               
