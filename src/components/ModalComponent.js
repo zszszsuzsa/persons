@@ -21,10 +21,9 @@ export default class ModalComponent extends Component {
 				name: "",
 				job: "",
 				age: "",
-				nickname: "",
-				isEmployee: false
+				nick: "",
+				employee: false
 			},
-			initial: "",
 			show: false,
 		};
 	}
@@ -38,7 +37,7 @@ export default class ModalComponent extends Component {
 	}
 
 	clearInput() {
-		this.setState({ name: "", job: "", age: "", nickname: "", isEmployee: false })
+		this.setState({ name: "", job: "", age: "", nick: "", employee: false })
 	}
 
 	//Setting the state by input fieldvalue binding
@@ -64,12 +63,13 @@ export default class ModalComponent extends Component {
 	}
 	handleEmployeeChange() {
 		this.setState({
-			newEmployee: Object.assign({}, this.state.newEmployee, { isEmployee: !this.state.newEmployee.isEmployee })
+			newEmployee: Object.assign({}, this.state.newEmployee, { employee: !this.state.newEmployee.employee })
 		});
 	}
 
 	setEmployee() {
 		this.props.addPerson(this.state.newEmployee)
+		this.props.convert();
 		this.handleClose();
 		this.clearInput();
 	}
@@ -88,34 +88,34 @@ export default class ModalComponent extends Component {
 					</Modal.Header>
 					<Modal.Body>
 						<form class="well">
-							<label for="name">
+							<label htmlFor="name">
 								Name:
 								</label>
 							<input type="text" value={this.state.newEmployee.name} onChange={e => this.handleNameChange(e)} />
 
-							<label for="job">
+							<label htmlFor="job">
 								Job title:
 								</label>
 							<input type="text" value={this.state.newEmployee.job} onChange={this.handleJobChange} />
 
-							<label for="age">
+							<label htmlFor="age">
 								Age:
 								</label>
 							<input type="text" value={this.state.newEmployee.age} onChange={this.handleAgeChange} />
 
-							<label for="nickname">
+							<label htmlFor="nick">
 								Nickname:
 								</label>
-							<input type="text" value={this.state.newEmployee.nickname} onChange={this.handleNicknameChange} />
+							<input type="text" value={this.state.newEmployee.nick} onChange={this.handleNicknameChange} />
 
-							<label for="employee">
+							<label htmlFor="employee">
 								Employee:
 								</label>
-							<input type="checkbox" value={this.state.newEmployee.isEmployee} name="emmployee" onChange={this.handleEmployeeChange}></input>
+							<input type="checkbox" value={this.state.newEmployee.employee} name="emmployee" onChange={this.handleEmployeeChange}></input>
 						</form>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button onClick={this.setEmployee.bind(this)}>Add new</Button>
+						<Button onClick={this.setEmployee.bind(this)}>OK</Button>
 						<Button onClick={this.handleClose} class="close">Close</Button>
 					</Modal.Footer>
 				</Modal>

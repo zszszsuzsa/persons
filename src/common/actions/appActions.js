@@ -1,4 +1,4 @@
-import {ADD_EMPLOYEE,DELETE_EMPLOYEE,GET_INITIAL_LIST} from '../constants/actionTypes';
+import {ADD_EMPLOYEE,DELETE_EMPLOYEE,GET_INITIAL_LIST, CONVERT_TO_JSON} from '../constants/actionTypes';
 
 export const getInitialList=()=>({
     type: GET_INITIAL_LIST
@@ -14,10 +14,7 @@ export const deleteRow = index => ({
     index
 });
 
-// export const addEmployee=value=>dispatch=>{
-//     dispatch(addRow(value));
-//  };
-
-//  export const deleteEmployee=index=>dispatch=>{
-//     dispatch(deleteRow(index));
-//  };
+export const convert = data => ({
+    type: CONVERT_TO_JSON,
+    data
+});

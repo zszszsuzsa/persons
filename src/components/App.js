@@ -1,8 +1,9 @@
 import Table from './Table';
 import ModalComponent from './ModalComponent';
+import DataDump from './DataDump';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addRow, deleteRow, getInitialList } from '../common/actions/appActions';
+import { addRow, deleteRow, getInitialList, convert } from '../common/actions/appActions';
 import './App.scss';
 
 
@@ -23,16 +24,15 @@ class App extends Component {
 	render() {
 		return (
 			<div className="container-fluid">
-				<ModalComponent addPerson={this.props.addPerson}/>
+				<ModalComponent addPerson={this.props.addPerson} convert={this.props.convertStateToJSON}/>
 				<div className="row">
 					<div className="col-sm-8 col-sm-offset-2 table-responsive">
-						<Table className="table" persons={this.props.persons.persons} />
+						<Table className="table" persons={this.props.state.persons} deletePerson={this.props.deletePerson} convert={this.props.convertStateToJSON} />
 					</div>
 				</div>
 				<div className="row dump">
 					<div className="col-sm-8 col-sm-offset-2 table-responsive">
-					<div>Data dump</div>
-						<textarea className="dump-text" persons={this.props.persons.persons}></textarea>
+						<DataDump raw={this.props.state.raw}/>
 					</div>
 				</div>
 			</div>
@@ -40,18 +40,21 @@ class App extends Component {
 	};
 }
 const mapStateToProps = (state) => ({
-	persons: state
+	state: state
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	addPerson: newPerson=> {
 		dispatch(addRow(newPerson))
 	},
-	deletePerson: index=>{
-		//TODO
+	deletePerson: indexToDelete=>{
+		dispatch(deleteRow(indexToDelete))
 	},
 	getInitialList() {
 		dispatch(getInitialList())
+	},
+	convertStateToJSON(){
+		dispatch(convert())
 	}
 })
 

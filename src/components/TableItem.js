@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 
 class TableItem extends Component {
 
+    deleteAndConvert(){
+        this.props.deletePerson(this.props.i);
+        this.props.convert();
+    }
+
     render() {
         return (
             <tr>
@@ -15,8 +20,7 @@ class TableItem extends Component {
                 </input>
             </td>
             <td>
-                {<a href="#">Delete</a>}
-               {/* <a href="#" deleteItem={this.deleteItem.bind(this, key)} onClick={this.props.deleteItem}>Delete</a> */}
+               <a href="#" onClick={this.deleteAndConvert.bind(this)}>Delete</a>
             </td>
           </tr>
               

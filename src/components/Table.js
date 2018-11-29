@@ -1,8 +1,6 @@
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import TableItem from './TableItem';
-import { connect } from 'react-redux';
-import { addRow, deleteRow } from '../common/actions/appActions';
 import './Table.scss';
 
 export default class Table extends Component {
@@ -25,7 +23,10 @@ export default class Table extends Component {
 					{this.props.persons.map((person, index) => {
 						return <TableItem
 							key={index}
+							i={index}
 							person={person}
+							deletePerson={this.props.deletePerson}
+							convert={this.props.convert}
 						/>
 					}
 					)}
