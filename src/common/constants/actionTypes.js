@@ -2,4 +2,4 @@ export const ADD_EMPLOYEE='ADD_EMPLOYEE';
 export const DELETE_EMPLOYEE='DELETE_EMPLOYEE';
 export const GET_INITIAL_LIST='GET_INITIAL_LIST';
 export const CONVERT_TO_JSON='CONVERT_TO_JSON';
-
+export const SORT_ASC='SORT_ASC';

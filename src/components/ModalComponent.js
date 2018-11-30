@@ -36,11 +36,13 @@ export default class ModalComponent extends Component {
 		this.setState({ show: true });
 	}
 
+	// Clear input fields after sending data to store
 	clearInput() {
 		this.setState({ name: "", job: "", age: "", nick: "", employee: false })
 	}
 
-	//Setting the state by input fieldvalue binding
+	//Setting the local state by input field value binding. 
+	// These values will be sent to the store on clicking OK buttton
 	handleNameChange(event) {
 		this.setState({
 			newEmployee: Object.assign({}, this.state.newEmployee, { name: event.target.value })
@@ -67,6 +69,12 @@ export default class ModalComponent extends Component {
 		});
 	}
 
+	/**
+	 * runs when user clicks on OK 
+	 * calls addPerson store method(send new data to teh store)
+	 * converts store data to text(json) for DataDump component's textarea
+	 * closes modal dialog
+	 */
 	setEmployee() {
 		this.props.addPerson(this.state.newEmployee)
 		this.props.convert();
@@ -84,7 +92,7 @@ export default class ModalComponent extends Component {
 				</div>
 				<Modal show={this.state.show} onHide={this.handleClose}>
 					<Modal.Header closeButton class="modal-header">
-						<Modal.Title>Modal heading</Modal.Title>
+						<Modal.Title>New person</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
 						<form class="well">
