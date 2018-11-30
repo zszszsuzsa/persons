@@ -2,7 +2,7 @@ import { ADD_EMPLOYEE, DELETE_EMPLOYEE, GET_INITIAL_LIST, CONVERT_TO_JSON, SORT_
 import data from '../../../src/persons.json';
 
 const appReducer = (state = { persons: [], raw: null }, action) => {
-	
+
 	switch (action.type) {
 		/**
 		 * getting the initial list to display from persons.json
@@ -53,35 +53,16 @@ const appReducer = (state = { persons: [], raw: null }, action) => {
 		case SORT_ASC: {
 			function compare(a, b) {
 				const key = action.key;
-
-				//checks if the data is a number or string. numbers are converted to number
-				// strings converted to uppercase for comparison
-				const elementA = (() => {
-					if (isNaN(Number(a[key]))) {
-						return a[key].toUpperCase();
+				//added for sorting boolean values
+				if (typeof a[key] === "boolean") {
+					if (typeof b[key] === "boolean") {
+						return a[key].toString().localeCompare(b[key].toString(), { numeric: true, sensitivity: 'variant' });
 					}
-					else {
-						return Number(a[key]);
-					}
-				})();
-				const elementB = (() => {
-					if (isNaN(Number(b[key]))) {
-						return b[key].toUpperCase();
-					}
-					else {
-						return Number(b[key]);
-					}
-				})();
-
-				//comparing two elements. 
-				//calling this function with sort method, elements are sorted based on comparison values
-				let comparison = 0;
-				if (elementA > elementB) {
-					comparison = 1;
-				} else if (elementA < elementB) {
-					comparison = -1;
 				}
-				return comparison
+				else {
+					//sorting strings
+					return a[key].localeCompare(b[key], undefined, { numeric: true, sensitivity: 'variant' });
+				}
 			}
 			return {
 				persons: state.persons.sort(compare)

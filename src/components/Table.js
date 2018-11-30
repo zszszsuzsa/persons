@@ -22,6 +22,7 @@ export default class Table extends Component {
 		this.setState({selected: id});
 		// sortBYColumn store action is triggered
 		this.props.sortByColumn(id);
+		this.props.convert();
 	}
 
 	render() {
