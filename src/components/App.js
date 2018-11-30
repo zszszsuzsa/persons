@@ -1,5 +1,6 @@
 import Table from './Table';
 import ModalComponent from './ModalComponent';
+import Graph from './Graph';
 import DataDump from './DataDump';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -32,6 +33,7 @@ class App extends Component {
 			<div className="container-fluid">
 				<ModalComponent addPerson={this.props.addPerson} 
 								convert={this.props.convertStateToJSON}/>
+				<Graph persons={this.props.state.persons} />
 				<div className="row">
 					<div className="col-sm-8 col-sm-offset-2 table-responsive">
 						<Table 
