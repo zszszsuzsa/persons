@@ -33,7 +33,6 @@ export default class Graph extends Component {
 		]
 		for (let i = 0; i < persons.length; i++) {
 			var x = Number(persons[i].age);
-			console.log(arr[0].number + 1);
 			switch (true) {
 				case (x < 21):
 					arr[0].number = arr[0].number + 1;
