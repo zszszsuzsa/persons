@@ -17,11 +17,9 @@ export default class Graph extends Component {
 	}
 
 	/**
-	 * creates an array for graph data with age groups, 
-	 * caterorises people of persons array derived from store data based on age
+	 * caterorises people of person array (from store) based on age
 	 */
 	categorize() {
-		let persons = this.props.persons;
 
 		let arr = [
 			{ label: "0-20", number: 0 },
@@ -31,14 +29,14 @@ export default class Graph extends Component {
 			{ label: "50+", number: 0 },
 			{ label: "other :)", number: 0 }
 		]
-		for (let i = 0; i < persons.length; i++) {
-			var x = Number(persons[i].age);
+		for (let i = 0; i < this.props.persons.length; i++) {
+			var x = Number(this.props.persons[i].age);
 			switch (true) {
 				case (x < 21):
 					arr[0].number = arr[0].number + 1;
 					break;
 				case (x > 20 && x < 31):
-					arr[1].numbe = arr[1].number + 1;
+					arr[1].number = arr[1].number + 1;
 					break;
 				case (x > 30 && x < 41):
 					arr[2].number = arr[2].number + 1;
